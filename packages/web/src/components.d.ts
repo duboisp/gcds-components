@@ -832,6 +832,72 @@ export namespace Components {
          */
         "href": string;
     }
+    interface GcdsPageFeedback {
+        /**
+          * Sets the line length to a maximum amount of characters per line to ensure a comfortable, accessible reading length.
+         */
+        "characterLimit"?: boolean;
+        /**
+          * Specifies the display behaviour of the text.
+         */
+        "display"?: | 'block'
+    | 'flex'
+    | 'inline'
+    | 'inline-block'
+    | 'inline-flex'
+    | 'none';
+        /**
+          * Adds margin below the text.
+         */
+        "marginBottom"?: | '0'
+    | '50'
+    | '100'
+    | '150'
+    | '200'
+    | '250'
+    | '300'
+    | '400'
+    | '450'
+    | '500'
+    | '550'
+    | '600'
+    | '700'
+    | '800'
+    | '900'
+    | '1000';
+        /**
+          * Adds margin above the text.
+         */
+        "marginTop"?: | '0'
+    | '50'
+    | '100'
+    | '150'
+    | '200'
+    | '250'
+    | '300'
+    | '400'
+    | '450'
+    | '500'
+    | '550'
+    | '600'
+    | '700'
+    | '800'
+    | '900'
+    | '1000';
+        "section"?: '';
+        /**
+          * Sets the appropriate HTML tags for the selected size.
+         */
+        "size"?: 'body' | 'caption';
+        /**
+          * Sets the main style of the text.
+         */
+        "textRole"?: 'light' | 'primary' | 'secondary';
+        /**
+          * Configurable option to allow feedback categorization
+         */
+        "theme"?: '';
+    }
     interface GcdsPagination {
         /**
           * List display - Current page number
@@ -1594,6 +1660,12 @@ declare global {
         prototype: HTMLGcdsNavLinkElement;
         new (): HTMLGcdsNavLinkElement;
     };
+    interface HTMLGcdsPageFeedbackElement extends Components.GcdsPageFeedback, HTMLStencilElement {
+    }
+    var HTMLGcdsPageFeedbackElement: {
+        prototype: HTMLGcdsPageFeedbackElement;
+        new (): HTMLGcdsPageFeedbackElement;
+    };
     interface HTMLGcdsPaginationElementEventMap {
         "gcdsFocus": void;
         "gcdsBlur": void;
@@ -1779,6 +1851,7 @@ declare global {
         "gcds-link": HTMLGcdsLinkElement;
         "gcds-nav-group": HTMLGcdsNavGroupElement;
         "gcds-nav-link": HTMLGcdsNavLinkElement;
+        "gcds-page-feedback": HTMLGcdsPageFeedbackElement;
         "gcds-pagination": HTMLGcdsPaginationElement;
         "gcds-phase-banner": HTMLGcdsPhaseBannerElement;
         "gcds-radio-group": HTMLGcdsRadioGroupElement;
@@ -2772,6 +2845,72 @@ declare namespace LocalJSX {
          */
         "onGcdsFocus"?: (event: GcdsNavLinkCustomEvent<void>) => void;
     }
+    interface GcdsPageFeedback {
+        /**
+          * Sets the line length to a maximum amount of characters per line to ensure a comfortable, accessible reading length.
+         */
+        "characterLimit"?: boolean;
+        /**
+          * Specifies the display behaviour of the text.
+         */
+        "display"?: | 'block'
+    | 'flex'
+    | 'inline'
+    | 'inline-block'
+    | 'inline-flex'
+    | 'none';
+        /**
+          * Adds margin below the text.
+         */
+        "marginBottom"?: | '0'
+    | '50'
+    | '100'
+    | '150'
+    | '200'
+    | '250'
+    | '300'
+    | '400'
+    | '450'
+    | '500'
+    | '550'
+    | '600'
+    | '700'
+    | '800'
+    | '900'
+    | '1000';
+        /**
+          * Adds margin above the text.
+         */
+        "marginTop"?: | '0'
+    | '50'
+    | '100'
+    | '150'
+    | '200'
+    | '250'
+    | '300'
+    | '400'
+    | '450'
+    | '500'
+    | '550'
+    | '600'
+    | '700'
+    | '800'
+    | '900'
+    | '1000';
+        "section"?: '';
+        /**
+          * Sets the appropriate HTML tags for the selected size.
+         */
+        "size"?: 'body' | 'caption';
+        /**
+          * Sets the main style of the text.
+         */
+        "textRole"?: 'light' | 'primary' | 'secondary';
+        /**
+          * Configurable option to allow feedback categorization
+         */
+        "theme"?: '';
+    }
     interface GcdsPagination {
         /**
           * List display - Current page number
@@ -3226,6 +3365,7 @@ declare namespace LocalJSX {
         "gcds-link": GcdsLink;
         "gcds-nav-group": GcdsNavGroup;
         "gcds-nav-link": GcdsNavLink;
+        "gcds-page-feedback": GcdsPageFeedback;
         "gcds-pagination": GcdsPagination;
         "gcds-phase-banner": GcdsPhaseBanner;
         "gcds-radio-group": GcdsRadioGroup;
@@ -3273,6 +3413,7 @@ declare module "@stencil/core" {
             "gcds-link": LocalJSX.GcdsLink & JSXBase.HTMLAttributes<HTMLGcdsLinkElement>;
             "gcds-nav-group": LocalJSX.GcdsNavGroup & JSXBase.HTMLAttributes<HTMLGcdsNavGroupElement>;
             "gcds-nav-link": LocalJSX.GcdsNavLink & JSXBase.HTMLAttributes<HTMLGcdsNavLinkElement>;
+            "gcds-page-feedback": LocalJSX.GcdsPageFeedback & JSXBase.HTMLAttributes<HTMLGcdsPageFeedbackElement>;
             "gcds-pagination": LocalJSX.GcdsPagination & JSXBase.HTMLAttributes<HTMLGcdsPaginationElement>;
             "gcds-phase-banner": LocalJSX.GcdsPhaseBanner & JSXBase.HTMLAttributes<HTMLGcdsPhaseBannerElement>;
             "gcds-radio-group": LocalJSX.GcdsRadioGroup & JSXBase.HTMLAttributes<HTMLGcdsRadioGroupElement>;
