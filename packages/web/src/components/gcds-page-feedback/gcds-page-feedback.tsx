@@ -349,7 +349,7 @@ export class GcdsPageFeedback {
 	console.log( this.el );
 	this.el.dataset.aaaYep = "abc123";
 	
-	// Listen on history push
+	// Listen on history push (To test, run this in the browser console > history.pushState({},"", "yes-yes-yes.html")
 	this.#historyPushNative = history.pushState;
 	history.pushState = this.#historyPush;
 	
@@ -502,14 +502,19 @@ export class GcdsPageFeedback {
 
   render() {
     const { lang, theme, section } =
-      this;
+      this,
+	  isConfirmedStep = this.currentStep === this.#stepPFT.confirmation;
 
     return (
       <Host>
-        <section class={`
+        <gcds-container class={`
 			gcds-page-feedback
-		    ${ this.currentStep === this.#stepPFT.confirmation ? 'confirmed' : '' }
+		    ${ isConfirmedStep ? 'confirmed' : '' }
 		  `}
+		  tag="section"
+		  border={ !isConfirmedStep }
+		  padding={ !isConfirmedStep ? '300' : null }
+		  size="sm"
 		>
 		  <gcds-sr-only tag="h3">
 			{i18n[lang]['heading']}
@@ -555,7 +560,7 @@ export class GcdsPageFeedback {
 				
 				<div class="page-feedback__details">
 				  {/* Reset the feedback field when submission completed*/}
-				  { this.currentStep !== this.#stepPFT.confirmation ? ( this.renderDescription ) : null }
+				  { !isConfirmedStep ? ( this.renderDescription ) : null }
 				</div>
 			  
 				<gcds-button onGcdsClick={ev => this.stepSendFeedback(ev)}>{i18n[lang]['submit']}</gcds-button>
@@ -563,18 +568,21 @@ export class GcdsPageFeedback {
 			  </div>
  		  </form>
 
+        </gcds-container>
 		  {/* Step 3 - Confirmation feedback submitted */}
 		  {/* Note: the alert is not rendering properly, some config change is required 
 
 			The right side of the PFT should be reserved for future use, like for adding an assistance function like a chat open button. So the alert can't be full width.
 		  */}
-		  { this.currentStep === this.#stepPFT.confirmation ? (
+		  { isConfirmedStep ? (
 			<div 
 			  class="page-feedback__confirmation"
 			  role="status">
 		      <gcds-alert
 			    alertRole="success"
 			    heading="Submitted"
+				container="sm"
+				isFixed
 		      >
 			    <p>{i18n[lang]['thanks']}</p>
 		      </gcds-alert>		
@@ -582,7 +590,6 @@ export class GcdsPageFeedback {
 		  ) : null }
 		  {/*
 		  */}
-        </section>
 		   <hr />
 		  <gcds-button onGcdsClick={ev => this.resetPFT(ev)}>RESET PFT</gcds-button>
       </Host>
