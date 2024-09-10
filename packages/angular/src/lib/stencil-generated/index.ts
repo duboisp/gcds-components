@@ -29,6 +29,7 @@ export const DIRECTIVES = [
   d.GcdsLink,
   d.GcdsNavGroup,
   d.GcdsNavLink,
+  d.GcdsPageFeedback,
   d.GcdsPagination,
   d.GcdsPhaseBanner,
   d.GcdsRadioGroup,
