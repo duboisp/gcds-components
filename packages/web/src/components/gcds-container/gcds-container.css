@@ -178,25 +178,46 @@
 }
 
 @layer size {
+  /* TODO only keep the [size=md] use case to support alert inside gcds-page-feedback */
+  :host([size=xl]), :host([size=lg]), :host([size=md]), :host([size=sm]), :host([size=xs]) {
+	width: fit-content;
+  }
+  
+  @media only screen and (width <= 37rem) {
+	:host([size=sm]) {
+	  width: unset;
+	}
+  }
+  
   :host .gcds-container {
-    &.size-xl {
+  
+    &.size-xl { /* 71.25rem */
       max-width: var(--gcds-container-size-xl);
     }
 
-    &.size-lg {
+    &.size-lg { /* 62rem */
       max-width: var(--gcds-container-size-lg);
     }
 
-    &.size-md {
+	
+    &.size-md { /* 48rem */
       max-width: var(--gcds-container-size-md);
     }
 
-    &.size-sm {
+		  
+    &.size-sm { /* 30rem */
       max-width: var(--gcds-container-size-sm);
-    }
 
-    &.size-xs {
+	  @media only screen and (width > 37rem) {
+		min-width: var(--gcds-container-size-sm);
+      }
+	}
+
+    &.size-xs { /* 20rem */
       max-width: var(--gcds-container-size-xs);
     }
   }
-}
+  
+
+  
+ }

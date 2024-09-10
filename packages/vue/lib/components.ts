@@ -316,6 +316,16 @@ export const GcdsNavLink = /*@__PURE__*/ defineContainer<JSX.GcdsNavLink>('gcds-
 ]);
 
 
+export const GcdsPageFeedback = /*@__PURE__*/ defineContainer<JSX.GcdsPageFeedback>('gcds-page-feedback', undefined, [
+  'textRole',
+  'characterLimit',
+  'display',
+  'marginTop',
+  'marginBottom',
+  'size'
+]);
+
+
 export const GcdsPagination = /*@__PURE__*/ defineContainer<JSX.GcdsPagination>('gcds-pagination', undefined, [
   'display',
   'label',
