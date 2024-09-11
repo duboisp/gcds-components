@@ -833,66 +833,17 @@ export namespace Components {
         "href": string;
     }
     interface GcdsPageFeedback {
+        "action"?: '';
         /**
-          * Sets the line length to a maximum amount of characters per line to ensure a comfortable, accessible reading length.
+          * If a contact us information is specified
          */
-        "characterLimit"?: boolean;
+        "contact"?: '';
+        "contactLink"?: '';
         /**
-          * Specifies the display behaviour of the text.
+          * Props
          */
-        "display"?: | 'block'
-    | 'flex'
-    | 'inline'
-    | 'inline-block'
-    | 'inline-flex'
-    | 'none';
-        /**
-          * Adds margin below the text.
-         */
-        "marginBottom"?: | '0'
-    | '50'
-    | '100'
-    | '150'
-    | '200'
-    | '250'
-    | '300'
-    | '400'
-    | '450'
-    | '500'
-    | '550'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000';
-        /**
-          * Adds margin above the text.
-         */
-        "marginTop"?: | '0'
-    | '50'
-    | '100'
-    | '150'
-    | '200'
-    | '250'
-    | '300'
-    | '400'
-    | '450'
-    | '500'
-    | '550'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000';
+        "notInPageDetailSection"?: boolean;
         "section"?: '';
-        /**
-          * Sets the appropriate HTML tags for the selected size.
-         */
-        "size"?: 'body' | 'caption';
-        /**
-          * Sets the main style of the text.
-         */
-        "textRole"?: 'light' | 'primary' | 'secondary';
         /**
           * Configurable option to allow feedback categorization
          */
@@ -959,6 +910,10 @@ export namespace Components {
           * Options to render radio buttons
          */
         "options": string | Array<RadioObject>;
+        /**
+          * Value for the selected radio element.
+         */
+        "value"?: string;
     }
     interface GcdsSearch {
         /**
@@ -2846,66 +2801,17 @@ declare namespace LocalJSX {
         "onGcdsFocus"?: (event: GcdsNavLinkCustomEvent<void>) => void;
     }
     interface GcdsPageFeedback {
+        "action"?: '';
         /**
-          * Sets the line length to a maximum amount of characters per line to ensure a comfortable, accessible reading length.
+          * If a contact us information is specified
          */
-        "characterLimit"?: boolean;
+        "contact"?: '';
+        "contactLink"?: '';
         /**
-          * Specifies the display behaviour of the text.
+          * Props
          */
-        "display"?: | 'block'
-    | 'flex'
-    | 'inline'
-    | 'inline-block'
-    | 'inline-flex'
-    | 'none';
-        /**
-          * Adds margin below the text.
-         */
-        "marginBottom"?: | '0'
-    | '50'
-    | '100'
-    | '150'
-    | '200'
-    | '250'
-    | '300'
-    | '400'
-    | '450'
-    | '500'
-    | '550'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000';
-        /**
-          * Adds margin above the text.
-         */
-        "marginTop"?: | '0'
-    | '50'
-    | '100'
-    | '150'
-    | '200'
-    | '250'
-    | '300'
-    | '400'
-    | '450'
-    | '500'
-    | '550'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000';
+        "notInPageDetailSection"?: boolean;
         "section"?: '';
-        /**
-          * Sets the appropriate HTML tags for the selected size.
-         */
-        "size"?: 'body' | 'caption';
-        /**
-          * Sets the main style of the text.
-         */
-        "textRole"?: 'light' | 'primary' | 'secondary';
         /**
           * Configurable option to allow feedback categorization
          */
@@ -2996,6 +2902,10 @@ declare namespace LocalJSX {
           * Options to render radio buttons
          */
         "options": string | Array<RadioObject>;
+        /**
+          * Value for the selected radio element.
+         */
+        "value"?: string;
     }
     interface GcdsSearch {
         /**

@@ -110,15 +110,79 @@
 	  <gcds-page-feedback></gcds-page-feedback>
 	  
 	  
-	  <gcds-grid columns="9fr 3fr">
+	  <gcds-grid columns="1fr" columns-tablet="10fr 2fr" columns-desktop="8fr 4fr">
 		<gcds-page-feedback></gcds-page-feedback>
 		<gcds-link href="#chat">Chatbot</gcds-link>
 	  </gcds-grid>
 	  
+	  
+	  <h2>With contact us link</h2>
+	  
+	  <gcds-page-feedback not-in-page-detail-section contact="ABC123 corp" contact-link="#helloworld"></gcds-page-feedback>
+	  
+	  
+	  <gcds-grid columns="1fr" columns-tablet="10fr 2fr" columns-desktop="8fr 4fr">
+		<gcds-page-feedback contact="ABC123 corp" contact-link="#helloworld"></gcds-page-feedback>
+		<gcds-link href="#chat">Chatbot</gcds-link>
+	  </gcds-grid>
+	  
+	  <h2>With custom feedback form</h2>
+	  
+	  <gcds-page-feedback action="helloworld">
+		<div slot="details">
+		  <gcds-select
+			select-id="custom-feedback-select"
+			label="Choose your favorite color"
+			name="custom-feedback-select"
+			default-value="Color lists"
+			required
+		  >
+			<option value="blue">Blue</option>
+			<option value="red">Red</option>
+			<option value="green">Green</option>
+			<option value="yellow">Yellow</option>
+		  </gcds-select>
+		  <gcds-textarea
+			textarea-id="custom-feedback-textarea"
+			name="custom123"
+			label="Why?">
+		  </gcds-textarea>
+		  <label>Try: 
+			<input type="text" name="test">
+		  </label>
+		  <gcds-radio-group
+			name="custom-feedback-radio"
+			options='[
+			  { "label": "No", "id": "custom-feedback-radio-1", "hint": "hoey", "value": "no" },
+			  { "label": "Yes", "id": "custom-feedback-radio-2", "hint": "hoey d", "value": "yes" }
+			]'>
+		  </gcds-radio-group>
+		</div>
+	  </gcds-page-feedback>
+	  
+	  
+	  <!--
+	  
+	  <gcds-fieldset
+          fieldset-id="fieldset"
+          legend="Radio button group"
+          hint="They are in a fieldset"
+          required
+        >
+          <gcds-radio-group
+            name="radio"
+            options='[{ "label": "Radio 1 label", "id": "radio1", "value": "radio1"}, { "label": "Radio 2 label", "id": "radio2", "value": "radio2"}]'
+          >
+          </gcds-radio-group>
+        </gcds-fieldset>
+		
+		-->
+	  
+	  
       <!-- ------------- Alerts ------------- -->
 
       <gcds-heading tag="h2">Alerts</gcds-heading>
-      <gcds-alert heading="Success alert" alert-role="success">
+      <gcds-alert heading="Success alert" alert-role="success" container="sm" is-fixed>
         <p>Example content</p>
       </gcds-alert>
       <gcds-alert heading="Info alert" alert-role="info">

@@ -182,6 +182,13 @@
   :host([size=xl]), :host([size=lg]), :host([size=md]), :host([size=sm]), :host([size=xs]) {
 	width: fit-content;
   }
+  
+  @media only screen and (width <= 37rem) {
+	:host([size=sm]) {
+	  width: unset;
+	}
+  }
+  
   :host .gcds-container {
   
     &.size-xl { /* 71.25rem */
@@ -201,7 +208,7 @@
     &.size-sm { /* 30rem */
       max-width: var(--gcds-container-size-sm);
 
-	  @media only screen and (width >= 51rem) {
+	  @media only screen and (width > 37rem) {
 		min-width: var(--gcds-container-size-sm);
       }
 	}

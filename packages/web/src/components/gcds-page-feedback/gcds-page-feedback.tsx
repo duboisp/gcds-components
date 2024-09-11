@@ -14,161 +14,9 @@ export class GcdsPageFeedback {
    * Props
    */
 
-  /**
-   * Sets the main style of the text.
-   */
-  @Prop({ mutable: true }) textRole?: 'light' | 'primary' | 'secondary' =
-    'primary';
+  @Prop({ mutable: true }) notInPageDetailSection?: boolean = false;
 
-  @Watch('textRole')
-  validateTextRole(newValue: string) {
-    const values = ['light', 'primary', 'secondary'];
-
-    if (!values.includes(newValue)) {
-      this.textRole = 'primary';
-    }
-  }
-
-  /**
-   * Sets the line length to a maximum amount of characters per line to ensure a comfortable, accessible reading length.
-   */
-  @Prop() characterLimit?: boolean = true;
-
-  /**
-   * Specifies the display behaviour of the text.
-   */
-  @Prop({ mutable: true }) display?:
-    | 'block'
-    | 'flex'
-    | 'inline'
-    | 'inline-block'
-    | 'inline-flex'
-    | 'none' = 'block';
-
-  @Watch('display')
-  validateDisplay(newValue: string) {
-    const values = [
-      'block',
-      'flex',
-      'inline',
-      'inline-block',
-      'inline-flex',
-      'none',
-    ];
-
-    if (!values.includes(newValue)) {
-      this.display = 'block';
-    }
-  }
-
-  /**
-   * Adds margin above the text.
-   */
-  @Prop({ mutable: true }) marginTop?:
-    | '0'
-    | '50'
-    | '100'
-    | '150'
-    | '200'
-    | '250'
-    | '300'
-    | '400'
-    | '450'
-    | '500'
-    | '550'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000' = '0';
-
-  @Watch('marginTop')
-  validateMarginTop(newValue: string) {
-    const values = [
-      '0',
-      '50',
-      '100',
-      '150',
-      '200',
-      '250',
-      '300',
-      '400',
-      '450',
-      '500',
-      '550',
-      '600',
-      '700',
-      '800',
-      '900',
-      '1000',
-    ];
-
-    if (!values.includes(newValue)) {
-      this.marginTop = '0';
-    }
-  }
-
-  /**
-   * Adds margin below the text.
-   */
-  @Prop({ mutable: true }) marginBottom?:
-    | '0'
-    | '50'
-    | '100'
-    | '150'
-    | '200'
-    | '250'
-    | '300'
-    | '400'
-    | '450'
-    | '500'
-    | '550'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000' = '400';
-
-  @Watch('marginBottom')
-  validateMarginBottom(newValue: string) {
-    const values = [
-      '0',
-      '50',
-      '100',
-      '150',
-      '200',
-      '250',
-      '300',
-      '400',
-      '450',
-      '500',
-      '550',
-      '600',
-      '700',
-      '800',
-      '900',
-      '1000',
-    ];
-
-    if (!values.includes(newValue)) {
-      this.marginBottom = '400';
-    }
-  }
-
-  /**
-   * Sets the appropriate HTML tags for the selected size.
-   */
-  @Prop({ mutable: true }) size?: 'body' | 'caption' = 'body';
-
-  @Watch('size')
-  validateSize(newValue: string) {
-    const values = ['body', 'caption'];
-
-    if (!values.includes(newValue)) {
-      this.size = 'body';
-    }
-  }
-
+  
   /**
    * Language of rendered component
    */
@@ -194,6 +42,17 @@ export class GcdsPageFeedback {
   
   @Prop({ mutable: true }) section?: '';
   //@Watch('section')
+
+
+  /**
+   * If a contact us information is specified
+   */
+  @Prop({ mutable: true }) contact?: '';
+  @Prop({ mutable: true }) contactLink?: '';
+  
+  
+  /* Custom form */
+  @Prop({ mutable: true }) action?: '';
 
   
   //
@@ -335,60 +194,17 @@ export class GcdsPageFeedback {
   }
   
   componentWillLoad() {
-  
+	
+	// Get the current page metadata
 	this.#getPageMetadata();
 	
-	
-    // Validate attributes and set defaults
-    this.validateTextRole(this.textRole);
-    this.validateDisplay(this.display);
-    this.validateMarginTop(this.marginTop);
-    this.validateMarginBottom(this.marginBottom);
-    this.validateSize(this.size);
-	
-	console.log( this.el );
-	this.el.dataset.aaaYep = "abc123";
-	
-	// Listen on history push (To test, run this in the browser console > history.pushState({},"", "yes-yes-yes.html")
+	// Listen on history push (To test, run this in the browser console > history.pushState({},"", "page-feedback.html")
 	this.#historyPushNative = history.pushState;
 	history.pushState = this.#historyPush;
-	
-    
-/*	const self = this;
-	window.addEventListener("popstate", (event) => {
-	  console.log( "POP state" );
-	  self.currentStep = self.#stepPFT.introQuestion;
-	});*/
-	
-	// Get page properties
-	/*
-	 * pageTitle
-	 * language
-	 * submissionPage
-	 * oppositelang
-	 * themeopt
-	 * sectionopt
-	 * institutionopt
-	 
-	 helpful = "Yes-Oui" | "No-Non"
-	 details => Text Area
-	*/
-	
-	// Need to check the preceding heading, if in a page-detail section, use h3, otherwise h2.
-	
-	// Bind to popstate event -> Recalculate the required prop
-	
+
   }
   
-  
-  /*
-	TODO:
-	
-	* Set the i18n language variable
-	* Fix the behavioural of this feature
-	* Adjust the CSS to get it rendered as expected
-  */
-  
+
   
   // Step of this page feedback form
   #stepPFT = { 
@@ -407,9 +223,6 @@ export class GcdsPageFeedback {
   stepFoundLookingFor( ev ) {
 	console.log( "Clicked: stepFoundLookingFor" );
 	
-	console.log( ev );
-	console.log( this );
-
 	// Workaround because we can't set value on button, neither associate the internal button with the web form.
 	const formHiddenInput = document.createElement('input');
 	formHiddenInput.type = "hidden";
@@ -417,52 +230,125 @@ export class GcdsPageFeedback {
 	formHiddenInput.value = "Yes-Oui";
 	
 	ev.target.parentElement.appendChild( formHiddenInput );
-	console.log( "Form to be submitted" );
-	console.log( formHiddenInput.form );
 	
-	const data = new URLSearchParams( new FormData( formHiddenInput.form ) as any ); //"abc&dce" );
-	
-	console.log( data );
+	const data = new URLSearchParams( new FormData( formHiddenInput.form ) as any );
 	
 	// Send the feedback, the response don't really matter, we always show a successful message
 	fetch( formHiddenInput.form.action, {
 	  method: formHiddenInput.form.method || 'post',
 	  body: data
+	}).then( () => {
+	  
+	  // Remove it to not have duplicate in SPA application
+	  formHiddenInput.remove();
 	});
 	
 	this.currentStep = this.#stepPFT.confirmation;
   }
   
   stepNotFoundLookingFor( ev ) {
-	console.log( "Clicked: stepNotFoundLookingFor" );
-	console.log( ev );
-	
-	
 	this.currentStep = this.#stepPFT.customFeedback;
   }
   
   stepSendFeedback( ev ) {
 	console.log( "Clicked: stepSendFeedback" );
 	
+	const parentElementTarget = ev.target.parentElement;
+	const slotDetails = this.el.querySelector( '[slot=details]' );
+
+	// Check if the custom field are valid
+	let invalidFields, validFields;
+	if ( this.action && slotDetails ) {
+	  invalidFields = slotDetails.querySelectorAll( ':invalid' );
+	  validFields = slotDetails.querySelectorAll( ':valid' );
+	  
+	  // Before to continue, we need to check the validation state of every GCDS field that do have a validate method.
+	  let validationPromises = [];
+	  let gcdsInputsValidation = [];
+	  for( let i = 0; i !== validFields.length; i++ ) {
+		const inputField = validFields[ i ];
+		if ( inputField.nodeName.startsWith( "GCDS-" ) && inputField.validate ) {
+		  validationPromises.push( inputField.validate() );
+		  gcdsInputsValidation.push( inputField );
+		}
+	  }
+	  
+	  if ( !validationPromises.length ) {
+
+		// Continue the process
+		this.sendFeedbackFieldValidated( parentElementTarget, validFields, invalidFields );
+	  }
+	  
+	  Promise.allSettled( validationPromises )
+		.then( (results) => {
+		  
+		  // Ensure that all Promise was fulfilled
+		  for( let i = 0; i !== results.length; i++ ) {
+			const resultPromise = results[ i ];
+			
+			// Move the focus on the first rejected
+			if ( resultPromise.status === 'rejected' ) {
+			  gcdsInputsValidation[ i ].focus();
+			  return;
+			}
+		  }
+		  
+		  // GCDS validation pass, let continue
+		  this.sendFeedbackFieldValidated( parentElementTarget, validFields, invalidFields );
+		  
+		});
+	  
+	} else {
+	
+	  this.sendFeedbackFieldValidated( parentElementTarget, validFields, invalidFields );
+	}
+  }
+  
+  sendFeedbackFieldValidated( parentElementTarget, validFields, invalidFields ) {
+  
+	console.log( "CONTINUED --- Clicked: stepSendFeedback" );
+  
+	// Check if there is any native input field that are invalid.
+	if ( invalidFields && invalidFields.length ) {
+	  
+	  // Only check the first one.
+	  const field  = invalidFields[ 0 ] as HTMLInputElement;
+	  field.reportValidity();
+	  
+	  // The user has been advised of the error by the browser
+	  return;
+	}
+	
 	// Workaround because we can't set value on button, neither associate the internal button with the web form.
 	const formHiddenInput = document.createElement('input');
 	formHiddenInput.type = "hidden";
 	formHiddenInput.name = "helpful";
 	formHiddenInput.value = "No-Non";
+
+	parentElementTarget.appendChild( formHiddenInput );
+
+	// URL Encode the form data
+	const data = new URLSearchParams( new FormData( formHiddenInput.form ) as any );
 	
-	ev.target.parentElement.appendChild( formHiddenInput );
-	
-	const data = new URLSearchParams( new FormData( formHiddenInput.form ) as any ); //"abc&dce" );
-	
-	console.log( data );
-	console.log( formHiddenInput.form.elements );
+	// Check and add name/value of additional web form elements
+	if ( validFields && validFields.length ) {
+	  for( let i = 0; i !== validFields.length; i++ ) {
+		const inputField = validFields[ i ];
+		data.append( inputField.name, inputField.value );
+	  }
+	}
 	
 	// Send the feedback, the response don't really matter, we always show a successful message
 	fetch( formHiddenInput.form.action, {
 	  method: formHiddenInput.form.method || 'post',
 	  body: data
+	}).then( () => {
+	  
+	  // Remove it to not have duplicate in SPA application
+	  formHiddenInput.remove();
 	});
 	
+	// Change the step
 	this.currentStep = this.#stepPFT.confirmation;
   }
   
@@ -473,7 +359,7 @@ export class GcdsPageFeedback {
 
   private get renderDescription() {
 	const lang = this.lang;
-	if ( !this.el.querySelector( '[slot=details]' ) ) {
+	if ( !( this.action && this.el.querySelector( '[slot=details]' ) ) ) {
 	  return (
 		<gcds-textarea
 		  textareaId="gc-pft-prblm"
@@ -490,37 +376,44 @@ export class GcdsPageFeedback {
   }
   
   private get renderContact() {
-	// if( Contact Name + Contact URL )
-	const lang = this.lang;
-	return (
-	  <gcds-details detailsTitle={i18n[lang]['urgentHelp']}>
-		<gcds-link href="#link">ABC corp</gcds-link>
-	  </gcds-details>
-	);
+	const { lang, contactLink, contact } = this;
+	
+	if ( contact && contactLink ) {
+	  return (
+		<gcds-details detailsTitle={i18n[lang]['urgentHelp']}>
+		  <gcds-link href={ contactLink }>{ contact }</gcds-link>
+		</gcds-details>
+	  );
+	} else {
+	  return null;
+	}
   }
   
 
   render() {
-    const { lang, theme, section } =
+    const { lang, theme, section, notInPageDetailSection } =
       this,
 	  isConfirmedStep = this.currentStep === this.#stepPFT.confirmation;
 
     return (
       <Host>
+		<section> {/* to be removed and replaced by 'tag=section' in the gcds-container when alert styling is fixed */}
         <gcds-container class={`
 			gcds-page-feedback
 		    ${ isConfirmedStep ? 'confirmed' : '' }
 		  `}
-		  tag="section"
-		  border={ !isConfirmedStep }
+		  tag="div" 
 		  padding={ !isConfirmedStep ? '300' : null }
 		  size="sm"
 		>
-		  <gcds-sr-only tag="h3">
+		  <gcds-sr-only tag={!notInPageDetailSection ? 'h3' : 'h2'}>
 			{i18n[lang]['heading']}
 		  </gcds-sr-only>
 
-		  <form action="http://localhost:3333/submit" data-action="https://feedback-retroaction.canada.ca/api/QueueProblemForm" method="post">
+		  <form 
+			id={ this.action ? 'pft' + this.action : null }
+			action={ !this.action ? 'http://localhost:3333/submit': this.action }
+			data-action="https://feedback-retroaction.canada.ca/api/QueueProblemForm" method="post">
 			
 			{/* Hidden field*/}
 			<input type="hidden" name="pageTitle" value={this.#pageTitle} />
@@ -554,9 +447,12 @@ export class GcdsPageFeedback {
 				  page-feedback__get-feedback
 				  ${this.currentStep !== this.#stepPFT.customFeedback ? 'd-none': ''}
 			  `}>
-				<gcds-sr-only role="status">{i18n[lang]['tellUs']}</gcds-sr-only>
 				
-				{this.renderContact}
+				{ this.currentStep === this.#stepPFT.customFeedback ? (
+				    <gcds-sr-only role="status">{i18n[lang]['tellUs']}</gcds-sr-only>
+				 ) : null }
+				
+				{ this.renderContact }
 				
 				<div class="page-feedback__details">
 				  {/* Reset the feedback field when submission completed*/}
@@ -570,14 +466,10 @@ export class GcdsPageFeedback {
 
         </gcds-container>
 		  {/* Step 3 - Confirmation feedback submitted */}
-		  {/* Note: the alert is not rendering properly, some config change is required 
-
-			The right side of the PFT should be reserved for future use, like for adding an assistance function like a chat open button. So the alert can't be full width.
+		  {/* Note: this alert is outside the gcds-container because of a styling conflict. When the style conflict is resolved, the explicit section can be removed and the gcds-container tag can be a section
 		  */}
 		  { isConfirmedStep ? (
-			<div 
-			  class="page-feedback__confirmation"
-			  role="status">
+			<div class="page-feedback__confirmation">
 		      <gcds-alert
 			    alertRole="success"
 			    heading="Submitted"
@@ -588,7 +480,9 @@ export class GcdsPageFeedback {
 		      </gcds-alert>		
 			</div>
 		  ) : null }
+		  </section>
 		  {/*
+			The following elements are only for development support, those need to be removed
 		  */}
 		   <hr />
 		  <gcds-button onGcdsClick={ev => this.resetPFT(ev)}>RESET PFT</gcds-button>

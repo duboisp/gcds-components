@@ -18,8 +18,10 @@
   }
   
   /* Add a spacing of 9 px between both gcds-button */
-  :host gcds-fieldset gcds-button+gcds-button {
-	margin-left: 9px;
+  @media only screen and (width >= 30rem) {
+    :host gcds-fieldset gcds-button+gcds-button {
+	  margin-left: 9px;
+    }
   }
   
   :host gcds-fieldset .page-feedback__btn-group {
@@ -37,14 +39,13 @@
 	margin-top: 12px!important;
   }
   
-  /*
+  
   :host .gcds-page-feedback:not(.confirmed) {
-	padding: 19px;
 	background-color: #f5f5f5;
 	border: 1px solid #e3e3e3;
 	border-radius: 4px;
   }
-  */
+  
   
   :host gcds-details {
 	margin-bottom: 7px;
