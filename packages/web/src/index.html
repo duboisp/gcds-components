@@ -106,7 +106,7 @@
       <gcds-heading tag="h1">GC Design System</gcds-heading>
 
       <hr class="my-550" />
-
+<!--
 	  <gcds-page-feedback></gcds-page-feedback>
 	  
 	  
@@ -127,9 +127,9 @@
 	  </gcds-grid>
 	  
 	  <h2>With custom feedback form</h2>
-	  
+	  -->
 	  <gcds-page-feedback action="helloworld">
-		<div slot="details">
+		<div slot="feedback-form">
 		  <gcds-select
 			select-id="custom-feedback-select"
 			label="Choose your favorite color"
@@ -147,8 +147,8 @@
 			name="custom123"
 			label="Why?">
 		  </gcds-textarea>
-		  <label>Try: 
-			<input type="text" name="test">
+		  <label>Try (required): 
+			<input type="text" name="test" required>
 		  </label>
 		  <gcds-radio-group
 			name="custom-feedback-radio"
@@ -158,6 +158,11 @@
 			]'>
 		  </gcds-radio-group>
 		</div>
+	  </gcds-page-feedback>
+	  
+	  
+	  
+	  <gcds-page-feedback feedback-form="/src/components/gcds-page-feedback/ajax/custom-feedback.html">
 	  </gcds-page-feedback>
 	  
 	  

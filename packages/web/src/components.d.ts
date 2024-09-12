@@ -833,12 +833,13 @@ export namespace Components {
         "href": string;
     }
     interface GcdsPageFeedback {
-        "action"?: '';
+        "action"?: string;
         /**
           * If a contact us information is specified
          */
         "contact"?: '';
         "contactLink"?: '';
+        "feedbackForm"?: '';
         /**
           * Props
          */
@@ -2801,12 +2802,13 @@ declare namespace LocalJSX {
         "onGcdsFocus"?: (event: GcdsNavLinkCustomEvent<void>) => void;
     }
     interface GcdsPageFeedback {
-        "action"?: '';
+        "action"?: string;
         /**
           * If a contact us information is specified
          */
         "contact"?: '';
         "contactLink"?: '';
+        "feedbackForm"?: '';
         /**
           * Props
          */

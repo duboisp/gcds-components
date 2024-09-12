@@ -1,6 +1,7 @@
 import { Component, Element, Host, Watch, Prop, State, h, Listen } from '@stencil/core';
 import { assignLanguage, observerConfig } from '../../utils/utils';
 import i18n from './i18n/i18n';
+import DOMPurify from 'dompurify';
 
 @Component({
   tag: 'gcds-page-feedback',
@@ -52,7 +53,88 @@ export class GcdsPageFeedback {
   
   
   /* Custom form */
-  @Prop({ mutable: true }) action?: '';
+  #feedbackFormHTML = "" as string;
+  #feedbackFormFragment = new DocumentFragment();
+  #sanitizeOptions = {
+	CUSTOM_ELEMENT_HANDLING: {
+	  tagNameCheck: /^gcds-/, // only allow GCDS custom elements
+	  attributeNameCheck: /.+/, // allow all attributes
+	  allowCustomizedBuiltInElements: false // customized built-ins are not allowed yet
+	}
+  };
+  
+  @State() submissionURL: string = "";
+  @Prop() action?: string;
+  validateActionUrl() {
+	this.submissionURL = this.action;
+  }
+  @Prop({ mutable: true }) feedbackForm?: '';
+  @Watch('feedbackForm')
+  validateFeedbackForm() {
+
+	// Check if we need to load an external feedback form
+    if ( this.feedbackForm ) {
+	
+	  // Load the form from a centralized URL
+	  
+	  const slotFeedbackFormInjected = this.el.querySelector( 'div[slot=feedback-form]' );
+	  
+	  if ( slotFeedbackFormInjected && !slotFeedbackFormInjected.hasAttribute( 'data-ajaxed-from' ) ) {
+		console.error( 'A custom feedback form are already set, unable to override via ajax' );
+		return;
+	  }
+	  
+	  fetch( this.feedbackForm, {
+		method: 'get'
+	  }).then( ( response ) => {
+	  
+		// If we get a 404, let's running on the fallback.
+		if (!response.ok) {
+		  this.feedbackForm = '';
+		  console.error( "404 - file not found" );
+		  throw new Error( "404 - file not found" );
+		}
+		
+		return response.text();
+	  })
+	  .then( ( responseText ) => {
+		
+		
+		// Create the slot container
+		const divSlotCustomForm = document.createElement('div');
+		divSlotCustomForm.slot = 'feedback-form';
+		divSlotCustomForm.dataset.ajaxedFrom = this.feedbackForm;
+		divSlotCustomForm.innerHTML = DOMPurify.sanitize( responseText, this.#sanitizeOptions ); // Insert sanitized HTML only
+		
+		// Extract the custom action from the fetched HTML fragment
+		const elmWithActionURL = divSlotCustomForm.querySelector( '[data-feedback-form-action]' ) as HTMLElement;
+		
+		// Remove the submission URL not specified
+		if ( !this.action ) {
+		  this.submissionURL = "";
+		}
+		
+		if ( !this.submissionURL && elmWithActionURL ) {
+		  this.submissionURL = elmWithActionURL.dataset.feedbackFormAction;
+		}
+		
+		// Abort if there no custom form action url defined
+		if ( !this.submissionURL ) {
+		  console.error( 'A custom feedback form action URL is required' );
+		  return;
+		}
+
+		// Remove the div slot with the custom form
+		slotFeedbackFormInjected && slotFeedbackFormInjected.remove();
+		
+		// Add the div slot to this element
+		this.el.append( divSlotCustomForm );
+		
+		console.log( "Form are going to be posted: " + this.submissionURL );
+		
+	  });
+	}
+  }
 
   
   //
@@ -171,6 +253,7 @@ export class GcdsPageFeedback {
 	this.currentStep = this.#stepPFT.introQuestion;
 	this.#historyPushNative.call(window.history, state, unused, url);
 	this.#getPageMetadata();
+	this.#restoreFeedbackForm();
   };
   
   // Listen to history back and reset the PFT to its intro state
@@ -191,6 +274,7 @@ export class GcdsPageFeedback {
 	this.#pageOppLangUrl = this.#getOppositeLangLocation();
 	this.#submissionPage = document.location.href;
 	this.#institution = this.#getInstitutionName();
+	
   }
   
   componentWillLoad() {
@@ -202,6 +286,9 @@ export class GcdsPageFeedback {
 	this.#historyPushNative = history.pushState;
 	history.pushState = this.#historyPush;
 
+	// Check if we need to load an external feedback form
+    this.feedbackForm && this.validateFeedbackForm();
+	this.action && this.validateActionUrl();
   }
   
 
@@ -251,16 +338,20 @@ export class GcdsPageFeedback {
   }
   
   stepSendFeedback( ev ) {
-	console.log( "Clicked: stepSendFeedback" );
 	
 	const parentElementTarget = ev.target.parentElement;
-	const slotDetails = this.el.querySelector( '[slot=details]' );
+	//const slotDetails = this.el.querySelector( '[slot=details]' );
+	const slotDetails = this.el.querySelector( '[slot=feedback-form]' );
+	
+	console.log( slotDetails );
 
 	// Check if the custom field are valid
 	let invalidFields, validFields;
-	if ( this.action && slotDetails ) {
+	if ( this.submissionURL && slotDetails ) {
+	//if ( slotDetails ) {
 	  invalidFields = slotDetails.querySelectorAll( ':invalid' );
 	  validFields = slotDetails.querySelectorAll( ':valid' );
+
 	  
 	  // Before to continue, we need to check the validation state of every GCDS field that do have a validate method.
 	  let validationPromises = [];
@@ -346,20 +437,73 @@ export class GcdsPageFeedback {
 	  
 	  // Remove it to not have duplicate in SPA application
 	  formHiddenInput.remove();
+	  
+	  this.#restoreFeedbackForm();
 	});
 	
 	// Change the step
 	this.currentStep = this.#stepPFT.confirmation;
   }
   
+  
+  // Reset the custom form if applicable because those field are not hard linked with the form
+  #restoreFeedbackForm() {
+	if ( this.#feedbackFormFragment.childElementCount > 0 ) {
+	  const slotFeedbackForm = this.el.querySelector( '[slot=feedback-form]' );
+	  slotFeedbackForm.remove();
+	  this.el.append( this.#feedbackFormFragment );
+	}
+  }
+
+
+  // Reset the PFT state
   resetPFT( ev ) {
+	this.#restoreFeedbackForm();
 	this.currentStep = this.#stepPFT.introQuestion;
   }
   
 
-  private get renderDescription() {
+  private get renderFormFeedback() {
 	const lang = this.lang;
-	if ( !( this.action && this.el.querySelector( '[slot=details]' ) ) ) {
+	
+	
+	//1- Clone le "div/slot" (Afin de restauré plus tard)
+	//2-
+	
+	
+	
+	// Reset the feedback form
+	// Load from cache
+	// Check if the lightdom has changed
+	
+	const slotFeedbackForm = this.el.querySelector( '[slot=feedback-form]' ) as HTMLElement;
+	const customAction = this.submissionURL;
+	
+	if ( slotFeedbackForm && customAction ) {
+	  
+	  // Reset our internal document fragment
+	  if ( this.#feedbackFormFragment.childElementCount > 0 ) {
+		this.#feedbackFormFragment = new DocumentFragment();
+	  }
+	  
+	  // Keep a copy of the current Feedback form to restore on page navigation
+	  this.#feedbackFormFragment.append( slotFeedbackForm.cloneNode( true ) );
+	  
+	  // Return the slot
+	  return <slot name="feedback-form"></slot>;
+	
+	} /*else if ( this.action && this.el.querySelector( '[slot=details]' ) ) {
+
+	  // Leverage the form inside the slot
+	  return <slot name="details"></slot>;
+	} else if ( this.el.querySelector( '[slot=feedback-form]' ) ) {
+
+	  // Leverage a master feedback form
+	  return <slot name="feedback-form"></slot>;
+
+	} */else {
+	  
+	  // Default feedback form
 	  return (
 		<gcds-textarea
 		  textareaId="gc-pft-prblm"
@@ -370,9 +514,8 @@ export class GcdsPageFeedback {
 		>
 		</gcds-textarea>
 	  );
-	} else {
-	  return <slot name="details"></slot>;
 	}
+	// TODO: Add a function to fetch the form externally
   }
   
   private get renderContact() {
@@ -412,7 +555,7 @@ export class GcdsPageFeedback {
 
 		  <form 
 			id={ this.action ? 'pft' + this.action : null }
-			action={ !this.action ? 'http://localhost:3333/submit': this.action }
+			action={ !this.submissionURL ? 'http://localhost:3333/submit': this.submissionURL }
 			data-action="https://feedback-retroaction.canada.ca/api/QueueProblemForm" method="post">
 			
 			{/* Hidden field*/}
@@ -456,7 +599,8 @@ export class GcdsPageFeedback {
 				
 				<div class="page-feedback__details">
 				  {/* Reset the feedback field when submission completed*/}
-				  { !isConfirmedStep ? ( this.renderDescription ) : null }
+				  {/* !isConfirmedStep ? ( this.renderDescription ) : null */ }
+				  { this.currentStep === this.#stepPFT.customFeedback ? ( this.renderFormFeedback ) : null }
 				</div>
 			  
 				<gcds-button onGcdsClick={ev => this.stepSendFeedback(ev)}>{i18n[lang]['submit']}</gcds-button>
