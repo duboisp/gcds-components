@@ -835,7 +835,7 @@ export namespace Components {
     interface GcdsPageFeedback {
         "action"?: string;
         /**
-          * If a contact us information is specified
+          * Optional contact us information
          */
         "contact"?: '';
         "contactLink"?: '';
@@ -846,7 +846,7 @@ export namespace Components {
         "notInPageDetailSection"?: boolean;
         "section"?: '';
         /**
-          * Configurable option to allow feedback categorization
+          * Optional configurable option for feedback categorization
          */
         "theme"?: '';
     }
@@ -2804,7 +2804,7 @@ declare namespace LocalJSX {
     interface GcdsPageFeedback {
         "action"?: string;
         /**
-          * If a contact us information is specified
+          * Optional contact us information
          */
         "contact"?: '';
         "contactLink"?: '';
@@ -2815,7 +2815,7 @@ declare namespace LocalJSX {
         "notInPageDetailSection"?: boolean;
         "section"?: '';
         /**
-          * Configurable option to allow feedback categorization
+          * Optional configurable option for feedback categorization
          */
         "theme"?: '';
     }
