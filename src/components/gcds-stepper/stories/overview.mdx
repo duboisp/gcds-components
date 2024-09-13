@@ -1,0 +1,55 @@
+import { Meta, Canvas, Story } from '@storybook/blocks';
+import * as Stepper from './gcds-stepper.stories';
+
+<Meta of={Stepper} name="Overview" />
+
+# Stepper<br/>`<gcds-stepper>`
+
+_Also called: progress indicator, steps._
+
+A stepper is a progress tracker for a multi-step process.
+
+<Canvas of={Stepper.Default} story={{ inline: true }} />
+
+## Examples
+
+<br />
+
+### Tag
+
+#### Heading 1
+
+<Canvas of={Stepper.tagH1} story={{ inline: true }} />
+
+#### Heading 2
+
+<Canvas of={Stepper.tagH2} story={{ inline: true }} />
+
+#### Heading 3
+
+<Canvas of={Stepper.tagH3} story={{ inline: true }} />
+
+### Language
+
+#### English
+
+<Canvas of={Stepper.Default} story={{ inline: true }} />
+
+#### French
+
+<Canvas of={Stepper.French} story={{ inline: true }} />
+
+## Resources
+
+{/* prettier-ignore */}
+<ul className="resources-list">
+  <li>
+    <gcds-link size="regular" href="https://design-system.alpha.canada.ca/en/components/stepper/" target="_blank">Guidance</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://github.com/cds-snc/gcds-components/tree/main/packages/web/src/components/gcds-stepper" target="_blank">Github</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://www.figma.com/file/mh2maMG2NBtk41k1O1UGHV/Canadian-Digital-Service%E2%80%A8---GC-Design-System?type=design&node-id=970-2581&mode=design&t=GNUXzKRS0V2iTiLb-0" target="_blank">Figma</gcds-link>
+  </li>
+</ul>

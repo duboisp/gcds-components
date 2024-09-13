@@ -1,0 +1,43 @@
+import { Meta, Canvas, Story } from '@storybook/blocks';
+import * as TopicMenu from './gcds-topic-menu.stories';
+
+<Meta of={TopicMenu} name="Overview" />
+
+# Theme and topic menu<br/>`<gcds-topic-menu>`
+
+Navigate to the top tasks from all Government of Canada websites.
+
+<Canvas of={TopicMenu.English} story={{ height: '60rem', inline: false }} />
+
+## Examples
+
+<br />
+
+### Default
+
+#### English
+
+<Canvas of={TopicMenu.English} story={{ height: '60rem', inline: false }} />
+
+#### French
+
+<Canvas of={TopicMenu.French} story={{ height: '60rem', inline: false }} />
+
+### Home page
+
+<Canvas of={TopicMenu.Home} story={{ height: '60rem', inline: false }} />
+
+## Resources
+
+{/* prettier-ignore */}
+<ul className="resources-list">
+  <li>
+    <gcds-link size="regular" href="https://design-system.alpha.canada.ca/en/components/theme-and-topic-menu/" target="_blank">Guidance</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://github.com/cds-snc/gcds-components/tree/main/packages/web/src/components/gcds-topic-menu" target="_blank">Github</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://www.figma.com/file/mh2maMG2NBtk41k1O1UGHV/Canadian-Digital-Service%E2%80%A8---GC-Design-System?type=design&node-id=7696-5049&mode=design&t=v5lCWmOttygWHdYf-0" target="_blank">Figma</gcds-link>
+  </li>
+</ul>

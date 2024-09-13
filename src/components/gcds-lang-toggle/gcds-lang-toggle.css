@@ -1,0 +1,50 @@
+@layer reset, default, desktop;
+
+@layer reset {
+  :host {
+    display: block;
+
+    .gcds-lang-toggle h2 {
+      margin: 0;
+      overflow: hidden;
+      position: absolute;
+      width: 0;
+    }
+  }
+}
+
+@layer default {
+  :host .gcds-lang-toggle {
+    gcds-link::part(link) {
+      padding: var(--gcds-lang-toggle-padding);
+    }
+
+    span {
+      display: none;
+    }
+
+    abbr {
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+  }
+}
+
+/* Note: viewport specific style decision */
+@layer desktop {
+  @media screen and (width >= 64em) {
+    :host .gcds-lang-toggle {
+      gcds-link::part(link) {
+        padding: 0;
+      }
+
+      span {
+        display: initial;
+      }
+
+      abbr {
+        display: none;
+      }
+    }
+  }
+}

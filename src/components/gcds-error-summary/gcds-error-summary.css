@@ -1,0 +1,55 @@
+@layer reset, default, compact;
+
+@layer reset {
+  :host {
+    display: block;
+  }
+}
+
+@layer default {
+  :host {
+    container: component summary / inline-size;
+
+    .gcds-error-summary {
+      padding: var(--gcds-error-summary-padding);
+      margin: var(--gcds-error-summary-margin);
+      border: var(--gcds-error-summary-border-width) solid
+        var(--gcds-error-summary-border-color);
+      color: var(--gcds-error-summary-text);
+      transition:
+        background 0.15s ease-in-out,
+        border 0.15s ease-in-out,
+        color 0.15s ease-in-out;
+      display: none;
+
+      &.gcds-show {
+        display: block;
+      }
+
+      .summary__errorlist {
+        padding: 0;
+        margin: var(--gcds-error-summary-list-margin);
+
+        .summary__listitem {
+          max-width: var(--gcds-error-summary-max-width);
+
+          &:not(:last-child) {
+            padding: var(--gcds-error-summary-list-item-padding);
+          }
+
+          gcds-link::part(link):not(:focus) {
+            color: var(--gcds-error-summary-link-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+@layer compact {
+  @container summary (width < 24em) {
+    :host .gcds-error-summary {
+      padding: var(--gcds-error-summary-mobile-padding);
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@layer reset, default;
+
+@layer reset {
+  :host {
+    display: block;
+
+    .gcds-breadcrumbs ol {
+      list-style: none;
+      overflow-x: hidden;
+    }
+  }
+}
+
+@layer default {
+  :host .gcds-breadcrumbs ol {
+    margin: var(--gcds-breadcrumbs-margin);
+    padding: var(--gcds-breadcrumbs-padding);
+
+    &.has-canada-link gcds-breadcrumbs-item:first-child,
+    &:not(.has-canada-link) ::slotted(:first-child) {
+      margin: var(--gcds-breadcrumbs-item-first-child-margin) !important;
+    }
+
+    &.has-canada-link gcds-breadcrumbs-item:first-child:before {
+      display: none;
+    }
+  }
+}

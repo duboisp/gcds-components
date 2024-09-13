@@ -1,0 +1,29 @@
+@layer reset, default;
+
+@layer reset {
+  :host {
+    display: block;
+
+    dl {
+      margin: 0;
+    }
+
+    slot {
+      display: initial;
+    }
+  }
+}
+
+@layer default {
+  :host .gcds-date-modified {
+    margin: var(--gcds-date-modified-margin);
+
+    :is(dt, gcds-text, dd) {
+      display: inline;
+    }
+
+    dd {
+      margin: var(--gcds-date-modified-description-margin);
+    }
+  }
+}

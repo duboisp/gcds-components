@@ -1,0 +1,75 @@
+import { Meta, Canvas, Story } from '@storybook/blocks';
+import * as Container from './gcds-container.stories';
+
+<Meta of={Container} name="Overview" />
+
+# Container<br/>`<gcds-container>`
+
+_Also called: wrapper, box._
+
+A box to group content by limiting the width.
+
+<Canvas of={Container.Default} story={{ inline: true }} />
+
+## Examples
+
+<br />
+
+### Container sizes
+
+#### Size: full
+
+<Canvas of={Container.SizeFull} story={{ inline: true }} />
+
+#### Size: xl
+
+<Canvas of={Container.SizeXl} story={{ inline: true }} />
+
+#### Size: lg
+
+<Canvas of={Container.SizeLg} story={{ inline: true }} />
+
+#### Size: md
+
+<Canvas of={Container.SizeMd} story={{ inline: true }} />
+
+#### Size: sm
+
+<Canvas of={Container.SizeSm} story={{ inline: true }} />
+
+#### Size: xs
+
+<Canvas of={Container.SizeXs} story={{ inline: true }} />
+
+### Centered
+
+<Canvas of={Container.Centered} story={{ inline: true }} />
+
+### Main page container
+
+Defines if the container is the main page container or not. If set to true, the width will be set to 90% for smaller screens to ensure consistency with the responsiveness of other core layout components (header + footer).
+
+<Canvas of={Container.MainContainer} story={{ inline: true }} />
+
+### Margin
+
+<Canvas of={Container.Margin} story={{ inline: true }} />
+
+### Padding
+
+<Canvas of={Container.Padding} story={{ inline: true }} />
+
+## Resources
+
+{/* prettier-ignore */}
+<ul className="resources-list">
+  <li>
+    <gcds-link size="regular" href="https://design-system.alpha.canada.ca/en/components/container/" target="_blank">Guidance</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://github.com/cds-snc/gcds-components/tree/develop/packages/web/src/components/gcds-container" target="_blank">Github</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://www.figma.com/file/mh2maMG2NBtk41k1O1UGHV/Canadian-Digital-Service%E2%80%A8---GC-Design-System?type=design&node-id=6660-15761&mode=design&t=LvA5Ee7oJjZ49rKT-0" target="_blank">Figma</gcds-link>
+  </li>
+</ul>

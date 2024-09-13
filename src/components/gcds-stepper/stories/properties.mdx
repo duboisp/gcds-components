@@ -1,0 +1,15 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as Stepper from './gcds-stepper.stories';
+
+<Meta of={Stepper} name="Events & properties" />
+
+{!(new URLSearchParams(window.location.search)).get('demo') && <h1>Events & properties</h1>}
+
+<Canvas
+  of={Stepper.Props}
+  story={{ inline: true }}
+  sourceState="shown"
+  type="dynamic"
+/>
+
+<Controls of={Stepper.Props} sort="requiredFirst" />

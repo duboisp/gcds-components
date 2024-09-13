@@ -1,0 +1,20 @@
+@layer reset, default;
+
+@layer reset {
+  :host {
+    display: inline-block;
+
+    slot {
+      display: initial;
+    }
+  }
+}
+
+@layer default {
+  :host .error-message {
+    &::part(text),
+    gcds-icon {
+      color: var(--gcds-error-message-text-color);
+    }
+  }
+}

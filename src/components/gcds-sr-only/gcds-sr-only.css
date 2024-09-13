@@ -1,0 +1,21 @@
+@layer reset, default;
+
+@layer reset {
+  :host {
+    slot {
+      display: initial;
+    }
+  }
+}
+
+@layer default {
+  :host {
+	/* reference: https://webaim.org/techniques/css/invisiblecontent/ */
+    position: absolute;
+	left: -10000px;
+	top:auto;
+	width: 1px;
+	height: 1px;
+    overflow: hidden;
+  }
+}

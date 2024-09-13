@@ -1,0 +1,125 @@
+@layer reset, default, roles, size, disabled, hover, focus, active, mobile;
+
+@layer reset {
+  :host {
+    display: inline-block;
+
+    .gcds-button {
+      box-sizing: border-box;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    slot {
+      display: initial;
+    }
+  }
+}
+
+@layer default {
+  :host .gcds-button {
+    display: inline-block;
+    width: var(--gcds-button-width);
+    font: var(--gcds-button-font);
+    text-align: center;
+    text-wrap: balance;
+    padding: var(--gcds-button-padding);
+    border: var(--gcds-button-border-width) solid transparent;
+    border-radius: var(--gcds-button-border-radius);
+    transition: all 0.15s ease-in-out;
+  }
+}
+
+@layer roles {
+  :host .gcds-button {
+    /* Button danger */
+    &.button--role-danger {
+      background-color: var(--gcds-button-danger-default-background);
+      color: var(--gcds-button-danger-default-text);
+    }
+
+    /* Button primary */
+    &.button--role-primary {
+      background-color: var(--gcds-button-primary-default-background);
+      color: var(--gcds-button-primary-default-text);
+    }
+
+    /* Button secondary */
+    &.button--role-secondary {
+      background-color: var(--gcds-button-secondary-default-background);
+      color: var(--gcds-button-secondary-default-text);
+      border: var(--gcds-button-border-width) solid currentColor;
+    }
+  }
+}
+
+@layer size {
+  :host .gcds-button.button--small {
+    font: var(--gcds-button-small-font);
+    padding: var(--gcds-button-small-padding);
+  }
+}
+
+@layer disabled {
+  :host .gcds-button[aria-disabled='true'] {
+    background-color: var(--gcds-button-shared-disabled-background);
+    color: var(--gcds-button-shared-disabled-text);
+    cursor: not-allowed;
+    border: var(--gcds-button-border-width) solid currentColor;
+    pointer-events: none;
+  }
+}
+
+@layer hover {
+  @media (hover: hover) {
+    :host .gcds-button:hover {
+      /* Danger button */
+      &.button--role-danger {
+        background-color: var(--gcds-button-danger-hover-background);
+      }
+
+      /* Primary button */
+      &.button--role-primary {
+        background-color: var(--gcds-button-primary-hover-background);
+      }
+
+      /* Secondary button */
+      &.button--role-secondary {
+        background-color: var(--gcds-button-secondary-hover-background);
+      }
+    }
+  }
+}
+
+@layer focus {
+  :host .gcds-button:focus {
+    background-color: var(--gcds-button-shared-focus-background);
+    color: var(--gcds-button-shared-focus-text);
+    outline: var(--gcds-button-shared-focus-outline-width) solid
+      var(--gcds-button-shared-focus-background);
+    outline-offset: var(--gcds-button-border-width);
+    border-color: var(--gcds-button-shared-focus-background);
+    box-shadow: var(--gcds-button-shared-focus-box-shadow);
+  }
+}
+
+@layer active {
+  :host .gcds-button:active {
+    background-color: var(--gcds-button-shared-active-background);
+    border-color: var(--gcds-button-shared-active-background);
+  }
+}
+
+/* Note: mobile specific style decision */
+@layer mobile {
+  @media screen and (max-width: 30rem) {
+    :host {
+      display: block;
+
+      .gcds-button {
+        width: var(--gcds-button-mobile-width);
+        margin: var(--gcds-button-mobile-margin);
+      }
+    }
+  }
+}

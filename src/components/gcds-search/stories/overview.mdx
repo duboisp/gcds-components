@@ -1,0 +1,45 @@
+import { Meta, Canvas, Story } from '@storybook/blocks';
+import * as Search from './gcds-search.stories';
+
+<Meta of={Search} name="Overview" />
+
+# Search<br/>`<gcds-search>`
+
+_Also called: search box._
+
+Search is a way to enter keywords to find relevant information.
+
+<Canvas of={Search.Default} story={{ inline: true }} />
+
+## Examples
+
+<br />
+
+### Default
+
+#### English
+
+<Canvas of={Search.Default} story={{ inline: true }} />
+
+#### French
+
+<Canvas of={Search.French} story={{ inline: true }} />
+
+### Custom
+
+<Canvas of={Search.Custom} story={{ inline: true }} />
+
+## Resources
+
+{/* prettier-ignore */}
+<ul className="resources-list">
+  <li>
+    <gcds-link size="regular" href="https://design-system.alpha.canada.ca/en/components/search/" target="_blank">Guidance</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://github.com/cds-snc/gcds-components/tree/main/packages/web/src/components/gcds-search" target="_blank">Github</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://www.figma.com/file/mh2maMG2NBtk41k1O1UGHV/Canadian-Digital-Service%E2%80%A8---GC-Design-System?type=design&node-id=7301-1409&mode=design&t=QC9vPhyviCSe8v0s-0" target="_blank">Figma</gcds-link>
+  </li>
+</ul>

@@ -1,0 +1,137 @@
+import { r as registerInstance, h, a as Host, g as getElement } from './index-e6d17e19.js';
+import { o as observerConfig, a as assignLanguage } from './utils-6349c5d1.js';
+import { h as handleKeyDownNav, g as getNavItems } from './utils-3efdc804.js';
+
+const I18N = {
+  en: {
+    closeTrigger: 'Close',
+    menuLabel: 'Menu',
+    navLabel:
+      ' - Use the enter key to select a menu item and travel to its page. Use the left and right arrow keys to navigate between menu and submenu items. Use the right arrow key to open submenus when they are available. Use the left arrow or escape keys to close a menu.',
+  },
+  fr: {
+    closeTrigger: 'Fermer',
+    menuLabel: 'Menu',
+    navLabel:
+      " - Utiliser la touche d'entrée pour sélectionner un élément du menu et voyager à la page indiquée. Utiliser les flèches gauches et droites pour naviguer entre les éléments et les sous-éléments du menu. Ouvrir les sous-éléments du menu avec la flèche droite lorsqu'il sont disponible. Fermer le menu avec la flèche gauche ou la touche d'échappement.",
+  },
+};
+
+const gcdsSideNavCss = "@layer reset, default, desktop, mobile;@layer reset{:host{display:block}:host *{box-sizing:border-box;margin:0;padding:0}}@layer default{:host{width:100%}:host .gcds-side-nav__heading{font:var(--gcds-side-nav-heading-font);margin-block-end:var(--gcds-side-nav-heading-margin);padding:var(--gcds-side-nav-heading-padding)}}@layer desktop{@media only screen and (width >= 64em){:host .gcds-side-nav{max-width:var(--gcds-side-nav-max-width)}}}@layer mobile{@media only screen and (width < 64em){:host .gcds-side-nav__heading{display:block;height:0;margin:0;overflow:hidden;padding:0;width:0}}}";
+
+const GcdsSideNav = class {
+    constructor(hostRef) {
+        registerInstance(this, hostRef);
+        this.label = undefined;
+        this.lang = undefined;
+        this.navItems = [];
+        this.navSize = undefined;
+    }
+    async focusInListener(e) {
+        if (this.el.contains(e.target) && !this.navSize) {
+            const mediaQuery = window.matchMedia('screen and (min-width: 64em)');
+            const nav = this.el;
+            const mobileTrigger = this.mobile;
+            if (mediaQuery.matches) {
+                this.navSize = 'desktop';
+            }
+            else {
+                this.navSize = 'mobile';
+            }
+            await this.updateNavItemQueue(this.el);
+            mediaQuery.addEventListener('change', async function (e) {
+                if (e.matches) {
+                    nav.updateNavSize('desktop');
+                    await nav.updateNavItemQueue(nav);
+                    if (mobileTrigger.hasAttribute('open')) {
+                        mobileTrigger.toggleNav();
+                    }
+                }
+                else {
+                    nav.updateNavSize('mobile');
+                    await nav.updateNavItemQueue(nav);
+                }
+            });
+        }
+    }
+    async focusOutListener(e) {
+        if (!this.el.contains(e.relatedTarget)) {
+            if (this.navSize == 'mobile') {
+                if (this.mobile.hasAttribute('open')) {
+                    await this.mobile.toggleNav();
+                }
+            }
+        }
+    }
+    async keyDownListener(e) {
+        if (this.el.contains(document.activeElement)) {
+            handleKeyDownNav(e, this.el, this.navItems);
+        }
+    }
+    async gcdsClickListener(e) {
+        if (this.el.contains(e.target)) {
+            // Update tab queue when clicking mobile menu
+            if (e.target == this.el && this.navSize == 'mobile') {
+                await this.updateNavItemQueue(e.target);
+                // Update tab queue when clicking dropdown
+            }
+            else if (e.target.nodeName == 'GCDS-NAV-GROUP' &&
+                !e.target.hasAttribute('open')) {
+                await this.updateNavItemQueue(this.el);
+            }
+        }
+    }
+    /*
+     * Observe lang attribute change
+     */
+    updateLang() {
+        const observer = new MutationObserver(mutations => {
+            if (mutations[0].oldValue != this.el.lang) {
+                this.lang = this.el.lang;
+            }
+        });
+        observer.observe(this.el, observerConfig);
+    }
+    /*
+     * Get current navSize state
+     */
+    async getNavSize() {
+        return this.navSize;
+    }
+    /*
+     * Pass new window size: desktop or mobile
+     */
+    async updateNavSize(size) {
+        this.navSize = size;
+    }
+    /*
+     * Update item queue for keyboard navigation based on passed element
+     */
+    async updateNavItemQueue(el, includeElement) {
+        if (includeElement) {
+            const childElements = await getNavItems(el);
+            this.navItems = [el, ...childElements];
+        }
+        else {
+            this.navItems = await getNavItems(el);
+        }
+        if (this.navSize == 'mobile') {
+            this.navItems = [...this.navItems, this.mobile];
+        }
+    }
+    async componentWillLoad() {
+        // Define lang attribute
+        this.lang = assignLanguage(this.el);
+        this.updateLang();
+    }
+    render() {
+        const { label, lang } = this;
+        return (h(Host, null, h("nav", { "aria-label": `${label}${I18N[lang].navLabel}`, class: "gcds-side-nav" }, h("h2", { class: "gcds-side-nav__heading" }, label), h("ul", null, h("gcds-nav-group", { menuLabel: I18N[lang].menuLabel, closeTrigger: I18N[lang].closeTrigger, openTrigger: I18N[lang].menuLabel, class: "gcds-mobile-nav", ref: element => (this.mobile = element), lang: lang }, h("slot", null))))));
+    }
+    get el() { return getElement(this); }
+};
+GcdsSideNav.style = gcdsSideNavCss;
+
+export { GcdsSideNav as gcds_side_nav };
+
+//# sourceMappingURL=gcds-side-nav.entry.js.map

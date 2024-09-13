@@ -1,0 +1,223 @@
+@layer reset, default, border, centered, main, margin, padding, size;
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  :host .gcds-container {
+    display: block;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    slot {
+      display: initial;
+    }
+  }
+}
+
+@layer default {
+  :host .gcds-container[class*='size'] {
+    width: var(--gcds-container-size-full);
+  }
+}
+
+@layer border {
+  :host .gcds-container.container-border {
+    border: var(--gcds-container-border);
+  }
+}
+
+@layer centered {
+  :host .gcds-container.container-centered {
+    margin-inline: auto !important;
+  }
+}
+
+@layer main {
+  :host .gcds-container.container-main:not(.size-full) {
+    width: 90%;
+  }
+}
+
+@layer margin {
+  :host .gcds-container {
+    &.m-0 {
+      margin: var(--gcds-container-spacing-0);
+    }
+
+    &.m-50 {
+      margin: var(--gcds-container-spacing-50);
+    }
+
+    &.m-100 {
+      margin: var(--gcds-container-spacing-100);
+    }
+
+    &.m-150 {
+      margin: var(--gcds-container-spacing-150);
+    }
+
+    &.m-200 {
+      margin: var(--gcds-container-spacing-200);
+    }
+
+    &.m-250 {
+      margin: var(--gcds-container-spacing-250);
+    }
+
+    &.m-300 {
+      margin: var(--gcds-container-spacing-300);
+    }
+
+    &.m-400 {
+      margin: var(--gcds-container-spacing-400);
+    }
+
+    &.m-450 {
+      margin: var(--gcds-container-spacing-450);
+    }
+
+    &.m-500 {
+      margin: var(--gcds-container-spacing-500);
+    }
+
+    &.m-550 {
+      margin: var(--gcds-container-spacing-550);
+    }
+
+    &.m-600 {
+      margin: var(--gcds-container-spacing-600);
+    }
+
+    &.m-700 {
+      margin: var(--gcds-container-spacing-700);
+    }
+
+    &.m-800 {
+      margin: var(--gcds-container-spacing-800);
+    }
+
+    &.m-900 {
+      margin: var(--gcds-container-spacing-900);
+    }
+
+    &.m-1000 {
+      margin: var(--gcds-container-spacing-1000);
+    }
+  }
+}
+
+@layer padding {
+  :host .gcds-container {
+    &.p-0 {
+      padding: var(--gcds-container-spacing-0);
+    }
+
+    &.p-50 {
+      padding: var(--gcds-container-spacing-50);
+    }
+
+    &.p-100 {
+      padding: var(--gcds-container-spacing-100);
+    }
+
+    &.p-150 {
+      padding: var(--gcds-container-spacing-150);
+    }
+
+    &.p-200 {
+      padding: var(--gcds-container-spacing-200);
+    }
+
+    &.p-250 {
+      padding: var(--gcds-container-spacing-250);
+    }
+
+    &.p-300 {
+      padding: var(--gcds-container-spacing-300);
+    }
+
+    &.p-400 {
+      padding: var(--gcds-container-spacing-400);
+    }
+
+    &.p-450 {
+      padding: var(--gcds-container-spacing-450);
+    }
+
+    &.p-500 {
+      padding: var(--gcds-container-spacing-500);
+    }
+
+    &.p-550 {
+      padding: var(--gcds-container-spacing-550);
+    }
+
+    &.p-600 {
+      padding: var(--gcds-container-spacing-600);
+    }
+
+    &.p-700 {
+      padding: var(--gcds-container-spacing-700);
+    }
+
+    &.p-800 {
+      padding: var(--gcds-container-spacing-800);
+    }
+
+    &.p-900 {
+      padding: var(--gcds-container-spacing-900);
+    }
+
+    &.p-1000 {
+      padding: var(--gcds-container-spacing-1000);
+    }
+  }
+}
+
+@layer size {
+  /* TODO only keep the [size=md] use case to support alert inside gcds-page-feedback */
+  :host([size=xl]), :host([size=lg]), :host([size=md]), :host([size=sm]), :host([size=xs]) {
+	width: fit-content;
+  }
+  
+  @media only screen and (width <= 37rem) {
+	:host([size=sm]) {
+	  width: unset;
+	}
+  }
+  
+  :host .gcds-container {
+  
+    &.size-xl { /* 71.25rem */
+      max-width: var(--gcds-container-size-xl);
+    }
+
+    &.size-lg { /* 62rem */
+      max-width: var(--gcds-container-size-lg);
+    }
+
+	
+    &.size-md { /* 48rem */
+      max-width: var(--gcds-container-size-md);
+    }
+
+		  
+    &.size-sm { /* 30rem */
+      max-width: var(--gcds-container-size-sm);
+
+	  @media only screen and (width > 37rem) {
+		min-width: var(--gcds-container-size-sm);
+      }
+	}
+
+    &.size-xs { /* 20rem */
+      max-width: var(--gcds-container-size-xs);
+    }
+  }
+  
+
+  
+ }

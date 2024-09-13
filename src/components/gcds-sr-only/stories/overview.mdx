@@ -1,0 +1,28 @@
+import { Meta, Canvas, Story } from '@storybook/blocks';
+import * as SROnly from './gcds-sr-only.stories';
+
+<Meta of={SROnly} name="Overview" />
+
+# Screen reader only<br/>`<gcds-sr-only>`
+
+_Also called: visually hidden, assistive text._
+
+<Canvas of={SROnly.Default} story={{ inline: true }} />
+
+## Tag
+
+Change the `tag` to a context-appropriate value from the list of available options. Using established standards for HTML tags that are semantic increase the accessibility of the content and improves the experience for everyone.
+
+<Canvas of={SROnly.Tag} story={{ inline: true }} />
+
+## Resources
+
+{/* prettier-ignore */}
+<ul className="resources-list">
+  <li>
+    <gcds-link size="regular" href="https://design-system.alpha.canada.ca/en/components/screen-reader-only/" target="_blank">Guidance</gcds-link>
+  </li>
+  <li>
+    <gcds-link size="regular" href="https://github.com/cds-snc/gcds-components/tree/main/packages/web/src/components/gcds-sr-only" target="_blank">Github</gcds-link>
+  </li>
+</ul>

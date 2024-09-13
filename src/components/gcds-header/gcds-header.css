@@ -1,0 +1,109 @@
+@layer reset, default, brand, wide;
+
+@layer reset {
+  :host {
+    display: block;
+
+    slot {
+      display: initial;
+    }
+  }
+}
+
+@layer default {
+  :host {
+    margin: var(--gcds-header-margin) !important;
+
+    .gcds-header__container {
+      justify-content: space-between;
+      width: 90%;
+      max-width: var(--gcds-header-container-max-width);
+      margin: 0 auto;
+    }
+
+    .gcds-header__skip-to-nav {
+      text-align: center;
+      position: absolute;
+      width: 100%;
+      margin-inline: auto;
+      top: var(--gcds-header-skiptonav-top);
+
+      gcds-link {
+        z-index: 3;
+        position: absolute;
+        top: var(--gcds-header-skiptonav-top);
+        left: 0;
+        width: inherit;
+
+        &:not(:focus) {
+          width: 0;
+          height: 0;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+        }
+      }
+    }
+  }
+}
+
+@layer brand {
+  :host .gcds-header__brand {
+    container: component brand / inline-size;
+    border-block-end: var(--gcds-header-brand-border-width) solid
+      var(--gcds-header-brand-border-color);
+    padding: var(--gcds-header-brand-padding);
+    margin: var(--gcds-header-brand-margin);
+
+    .brand__container {
+      display: grid;
+      grid-gap: var(--gcds-header-brand-grid-gap);
+      grid-template-columns: 1fr 0.1fr;
+      grid-template-areas:
+        'signature toggle'
+        'search search';
+      width: 90%;
+      max-width: var(--gcds-header-container-max-width);
+      margin: 0 auto;
+
+      &.container--simple {
+        grid-template-areas: 'signature toggle';
+      }
+
+      :is(.brand__toggle, slot[name='toggle']) {
+        grid-area: toggle;
+        text-align: right;
+      }
+
+      :is(.brand__signature, slot[name='signature']) {
+        grid-area: signature;
+
+        gcds-signature {
+          margin: var(--gcds-header-brand-signature-margin);
+        }
+      }
+
+      .brand__search {
+        grid-area: search;
+        max-width: 100%;
+        display: block;
+      }
+    }
+  }
+}
+
+@layer wide {
+  @container brand (width >= 51em) {
+    :host .gcds-header__brand .brand__container {
+      grid-template-areas:
+        'toggle toggle'
+        'signature search';
+      grid-template-columns: 1fr 1fr;
+
+      .brand__search,
+      slot[name='search'] {
+        width: fit-content;
+        margin-inline-start: auto;
+      }
+    }
+  }
+}
